@@ -1,4 +1,4 @@
-# ADC Section 2 — Reactive Components
+# ADC UTOP work  — Reactive Components, Resonant Circuits
 
 Analysis and Design of Circuits Lab, Part 1 (Autumn Term weeks 4–6), Section 2.
 
