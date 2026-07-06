@@ -108,12 +108,12 @@ Create formulas to calculate the magnitude and argument of $Z_L$ for each freque
 Note that the frequencies increase in an exponential sequence, not linear — this is a more useful way of showing data which covers such a large range and it is used very commonly in EEE.
 Remember to convert from frequency in Hz to angular velocity $\omega$ in $\text{rad}s^{-1}$.
 
-Repeat the same calculation for a capacitor, whose non-ideal impedance is $Z_C=\dfrac{1}{j\omega C}+R$, using its own capacitance $C$ and parasitic series resistance $R$.
+Repeat the same calculation for a capacitor, whose non-ideal impedance is $Z_C=1/(j\omega C)+R$, using its own capacitance $C$ and parasitic series resistance $R$.
 
 Finally, for **both** the inductor and the capacitor, create a graph that overlays the *ideal* and *non-ideal* characteristics on the same axes:
 
-- the **ideal** characteristic, *excluding* the parasitic ohmic resistance ( $Z_L=j\omega L$ and $Z_C=\dfrac{1}{j\omega C}$ )
-- the **non-ideal** characteristic, *including* the series resistance ( $Z_L=j\omega L+R$ and $Z_C=\dfrac{1}{j\omega C}+R$ )
+- the **ideal** characteristic, *excluding* the parasitic ohmic resistance ( $Z_L=j\omega L$ and $Z_C=1/(j\omega C)$ )
+- the **non-ideal** characteristic, *including* the series resistance ( $Z_L=j\omega L+R$ and $Z_C=1/(j\omega C)+R$ )
 
 For each component plot $|Z|$ vs. $f$ and $\arg(Z)$ vs. $f$, overlapping the ideal and non-ideal curves so you can see exactly where the parasitic resistance makes the real component depart from the ideal.
 Set the graph to use logarithmic scales for axes showing $f$ and $|Z|$, and linear scales for axes showing $\arg(Z)$.
@@ -189,26 +189,37 @@ Verify your result using the LCR bridge (ask for help with this piece of equipme
 
 - [ ] Measure the value of one unknown inductor.
 
-### A first-order filter
+### RC and RL filters
 
-The impedance of a capacitor changes with frequency, so combining a capacitor with resistors produces a circuit whose behaviour depends on frequency.
+The impedance of a capacitor or an inductor changes with frequency, so combining one with a resistor produces a circuit whose behaviour depends on frequency.
 A circuit that changes a signal according to frequency is called a *filter*, and it is described by its *transfer function* $T(f)=V_\text{out}(f)/V_\text{in}$ — the ratio of output to input, which has both a magnitude and a phase.
+Each filter has a *corner (or centre) frequency* $f_c$ that marks the transition between the passed and attenuated frequencies.
 
-The circuit below is a potential divider in which the lower arm is a capacitor $C_1$ in series with a resistor $R_2$.
+The two circuits below are simple first-order filters, each a potential divider of a resistor and a reactive component.
+Their component values have been chosen so that both are centred on $f_c\approx159\text{Hz}$.
 
-[![A first-order filter with a gain floor](graphics/RCR_git.png)](graphics/RCR_git.png)
+The **RC filter** takes its output across the capacitor.
+With $R=1\text{k}\Omega$ and $C=1\mu\text{F}$ the corner frequency is $f_c=1/(2\pi RC)=1/(2\pi\cdot1000\cdot1\times10^{-6})\approx159\text{Hz}$.
+At low frequency the capacitor has a high impedance and holds most of the voltage, so the output follows the input; as frequency rises the capacitor's impedance falls and the output is attenuated — this is a **low-pass** response.
 
-At low frequency the capacitor has a very high impedance, so almost no current flows through the lower arm and little voltage is dropped across $R_1$ — the output follows the input and the gain is close to unity (0dB).
-As the frequency rises the impedance of $C_1$ falls, more of the input is dropped across $R_1$ and the gain decreases.
-At high frequency the capacitor behaves as a short circuit, so the gain settles to a floor set by the divider of $R_1$ against $R_2$ and cannot fall any further.
-The transition between the two happens near the *corner frequency*, where the reactance of $C_1$ becomes comparable to $R_1+R_2$.
+[![RC low-pass filter centred at 159 Hz](graphics/rc_filter.png)](graphics/rc_filter.png)
 
-Measure the transfer function with the signal generator driving the input: measure $V_\text{in}$ on CHA and $V_\text{out}$ on CHB, and record the magnitude ratio and phase difference at each frequency between 10Hz and 100kHz.
+The **RL filter** takes its output across the inductor.
+With $R=100\Omega$ and $L=100\text{mH}$ the corner frequency is $f_c=R/(2\pi L)=100/(2\pi\cdot0.1)\approx159\text{Hz}$.
+At low frequency the inductor has a low impedance and drops almost no voltage, so the output is small; as frequency rises the inductor's impedance grows and the output increases — this is a **high-pass** response.
+
+[![RL high-pass filter centred at 159 Hz](graphics/rl_filter.png)](graphics/rl_filter.png)
+
+Measure the transfer function of each filter with the signal generator driving the input: measure $V_\text{in}$ on CHA and $V_\text{out}$ on CHB, and record the magnitude ratio and phase difference at each frequency between 10Hz and 100kHz.
+Take the output **across the capacitor** for the first circuit and **across the inductor** for the second.
 Plot $|T(f)|$ against frequency on logarithmic axes and $\arg(T(f))$ on a linear axis.
 
-- [ ] Derive the transfer function of the filter and predict its low-frequency gain, its high-frequency gain floor and its corner frequency.
+- [ ] Measure and plot the magnitude and phase of the transfer function of the RC filter, taken across the capacitor.
 
-- [ ] Measure and plot the magnitude and phase of the transfer function, and compare them with your prediction.
+- [ ] Measure and plot the magnitude and phase of the transfer function of the RL filter, taken across the inductor.
+
+Notice that in each circuit the resistor and the reactive component share the same current, so their voltages must add up to the input at every frequency.
+This means that if you instead measured the response **across the resistor**, you would obtain the *complementary* filter to the one measured across the other element: the RC filter measured across $R$ is a high-pass, and the RL filter measured across $R$ is a low-pass — in each case the mirror image of the response you plotted above.
 
 ### Filter with a gain floor
 
@@ -216,7 +227,7 @@ The filter above settles to a gain floor at high frequency, but its low-frequenc
 Often we want to set the low-frequency gain to a specific value below unity as well.
 This is done by adding a resistor $R_3$ in parallel with the capacitor $C_1$ in the lower leg of the divider, so that a defined resistance remains in the arm even when the capacitor is open.
 
-[![A filter with a fixed gain floor](graphics/gain_floor_git.png)](graphics/gain_floor_git.png)
+[![A filter with a fixed gain floor](graphics/gain_floor.png)](graphics/gain_floor.png)
 
 At low frequency the capacitor is effectively open, so the gain is set by the divider of $R_1$ against $R_2+R_3$.
 At high frequency the capacitor behaves as a short circuit and removes $R_3$ from the divider, so the gain settles to a floor set by $R_1$ against $R_2$ alone and cannot fall any further.
