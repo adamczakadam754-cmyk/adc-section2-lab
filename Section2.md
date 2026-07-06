@@ -27,6 +27,8 @@ Both channel grounds must therefore stay on the true common ground:
 <table>
 <tr>
 <td align="center"><img src="graphics/src_ground_correct.png" width="300"><br><b>Correct:</b> both ground leads on the common ground. <i>v</i><sub>R</sub> is recovered with the math channel.</td>
+</tr>
+<tr>
 <td align="center"><img src="graphics/src_ground_wrong.png" width="300"><br><b>Incorrect:</b> the ground lead placed below <i>R</i> shorts <i>Z</i> to ground.</td>
 </tr>
 </table>
@@ -60,30 +62,25 @@ The main tool you have to control this is the test resistance $R$, and the two c
 
 ### Impedance versus frequency
 
-The reactance of an ideal capacitor or inductor sets how its impedance changes with frequency.
-For an ideal capacitor $|Z_C|=1/(2\pi f C)$, so the impedance *falls* as frequency rises.
-For an ideal inductor $|Z_L|=2\pi f L$, so the impedance *rises* with frequency.
-On logarithmic axes each is a straight line — sloping down for a capacitor and up for an inductor.
-Real components follow these lines over a limited range and then depart from them because of the parasitic elements that every physical component carries.
+The reactance of an ideal inductor sets how its impedance changes with frequency.
+An ideal inductor has impedance
 
-A real capacitor passes through three regions as frequency increases:
+$$ Z_L = j\omega L = j\,2\pi f L $$
 
-[![Impedance of a real capacitor versus frequency](graphics/impedance_of_an_capacitor.png)](graphics/impedance_of_an_capacitor.png)
+so its magnitude
 
-- **Capacitive region (low frequency):** the impedance tracks the ideal $1/(2\pi f C)$ line and falls with frequency, because the capacitance dominates.
-- **Self-resonance ( $F_r$ ):** the parasitic series inductance of the leads and plates resonates with the capacitance. The two reactances cancel, so the impedance falls to a minimum set only by the parasitic series resistance.
-- **Inductive region (high frequency):** above $F_r$ the parasitic series inductance dominates, so the impedance rises with frequency and the capacitor behaves like an inductor.
+$$ |Z_L| = 2\pi f L $$
 
-A real inductor behaves in the opposite way:
+is directly proportional to frequency — as the frequency rises, the impedance rises with it.
+Plotted on logarithmic axes this proportionality becomes a straight line of gradient $+1$: every decade of frequency raises $|Z_L|$ by exactly one decade.
+The phase is constant at $\arg(Z_L)=+90°$, because the impedance is purely imaginary (purely reactive).
 
-[![Impedance of a real inductor versus frequency](graphics/impedance_of_an_inductor.png)](graphics/impedance_of_an_inductor.png)
+Over the range 1Hz to 100kHz a pure inductor therefore has the ideal, linear characteristic below:
 
-- **Inductive region (low frequency):** the impedance tracks the ideal $2\pi f L$ line and rises with frequency, because the inductance dominates. At very low frequency the impedance instead flattens towards the parasitic series resistance of the coil.
-- **Self-resonance:** the capacitance between the turns of wire resonates with the inductance, this time in parallel, so the impedance rises to a sharp maximum.
-- **Capacitive region (high frequency):** above resonance the winding capacitance dominates, so the impedance falls with frequency and the inductor behaves like a capacitor.
+[![Ideal impedance of a pure inductor versus frequency](graphics/ideal_inductor_Zvf.png)](graphics/ideal_inductor_Zvf.png)
 
-In this experiment you will work mainly in the *linear region* of each component, where $|Z|$ is a straight line on logarithmic axes ( $\propto 1/f$ for a capacitor, $\propto f$ for an inductor).
-This is the region where the series-resistance model below applies and where the value of the component can be found directly from its impedance.
+In this experiment you will work mainly in this *linear region*, where $|Z_L|$ is a straight line on logarithmic axes.
+This is the region where the series-resistance model below applies and where the value of the inductor can be found directly from its impedance using $L=|Z_L|/(2\pi f)$.
 
 ### Before the lab
 
@@ -111,11 +108,14 @@ Create formulas to calculate the magnitude and argument of $Z_L$ for each freque
 Note that the frequencies increase in an exponential sequence, not linear — this is a more useful way of showing data which covers such a large range and it is used very commonly in EEE.
 Remember to convert from frequency in Hz to angular velocity $\omega$ in $\text{rad}s^{-1}$.
 
-Finally, create a graph showing:
+Repeat the same calculation for a capacitor, whose non-ideal impedance is $Z_C=\dfrac{1}{j\omega C}+R$, using its own capacitance $C$ and parasitic series resistance $R$.
 
-- $|Z_L|$ vs. $f$
-- $\arg(Z_L)$ vs. $f$
+Finally, for **both** the inductor and the capacitor, create a graph that overlays the *ideal* and *non-ideal* characteristics on the same axes:
 
+- the **ideal** characteristic, *excluding* the parasitic ohmic resistance ( $Z_L=j\omega L$ and $Z_C=\dfrac{1}{j\omega C}$ )
+- the **non-ideal** characteristic, *including* the series resistance ( $Z_L=j\omega L+R$ and $Z_C=\dfrac{1}{j\omega C}+R$ )
+
+For each component plot $|Z|$ vs. $f$ and $\arg(Z)$ vs. $f$, overlapping the ideal and non-ideal curves so you can see exactly where the parasitic resistance makes the real component depart from the ideal.
 Set the graph to use logarithmic scales for axes showing $f$ and $|Z|$, and linear scales for axes showing $\arg(Z)$.
 As an example, $|Z_L|$ vs. $f$ should look something like this, depending on the values of $R$ and $L$:
 

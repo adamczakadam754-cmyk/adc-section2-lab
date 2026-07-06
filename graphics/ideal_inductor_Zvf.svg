@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="Georgia, 'Times New Roman', serif">
+  <rect width="640" height="480" fill="white"/>
+
+  <!-- title -->
+  <text x="320" y="28" font-size="18" text-anchor="middle">Ideal inductor: |Z&#8202;<tspan font-size="12" dy="4">L</tspan><tspan dy="-4">| = 2&#960;fL</tspan></text>
+
+  <!-- plot frame -->
+  <rect x="90" y="40" width="470" height="390" fill="none" stroke="black" stroke-width="1.5"/>
+
+  <!-- ===== gridlines (decades) ===== -->
+  <g stroke="#cccccc" stroke-width="1">
+    <!-- vertical: f = 10^0..10^5 at x=90..560 step 94 -->
+    <line x1="184" y1="40" x2="184" y2="430"/>
+    <line x1="278" y1="40" x2="278" y2="430"/>
+    <line x1="372" y1="40" x2="372" y2="430"/>
+    <line x1="466" y1="40" x2="466" y2="430"/>
+    <!-- horizontal: |Z| = 10^3..10^-3 at y=40..430 step 65 -->
+    <line x1="90" y1="105" x2="560" y2="105"/>
+    <line x1="90" y1="170" x2="560" y2="170"/>
+    <line x1="90" y1="235" x2="560" y2="235"/>
+    <line x1="90" y1="300" x2="560" y2="300"/>
+    <line x1="90" y1="365" x2="560" y2="365"/>
+  </g>
+
+  <!-- ===== axis tick labels ===== -->
+  <!-- x labels -->
+  <g font-size="13" text-anchor="middle">
+    <text x="90"  y="450">10<tspan font-size="9" dy="-6">0</tspan></text>
+    <text x="184" y="450">10<tspan font-size="9" dy="-6">1</tspan></text>
+    <text x="278" y="450">10<tspan font-size="9" dy="-6">2</tspan></text>
+    <text x="372" y="450">10<tspan font-size="9" dy="-6">3</tspan></text>
+    <text x="466" y="450">10<tspan font-size="9" dy="-6">4</tspan></text>
+    <text x="560" y="450">10<tspan font-size="9" dy="-6">5</tspan></text>
+  </g>
+  <!-- y labels -->
+  <g font-size="13" text-anchor="end">
+    <text x="82" y="45">10<tspan font-size="9" dy="-6">3</tspan></text>
+    <text x="82" y="110">10<tspan font-size="9" dy="-6">2</tspan></text>
+    <text x="82" y="175">10<tspan font-size="9" dy="-6">1</tspan></text>
+    <text x="82" y="240">10<tspan font-size="9" dy="-6">0</tspan></text>
+    <text x="82" y="305">10<tspan font-size="9" dy="-6">&#8722;1</tspan></text>
+    <text x="82" y="370">10<tspan font-size="9" dy="-6">&#8722;2</tspan></text>
+    <text x="82" y="435">10<tspan font-size="9" dy="-6">&#8722;3</tspan></text>
+  </g>
+
+  <!-- axis titles -->
+  <text x="325" y="474" font-size="15" text-anchor="middle" font-style="italic">Frequency f (Hz)</text>
+  <text x="26" y="235" font-size="15" text-anchor="middle" font-style="italic" transform="rotate(-90 26 235)">|Z&#8202;<tspan font-size="10" dy="4">L</tspan><tspan dy="-4">| (&#937;)</tspan></text>
+
+  <!-- ===== the ideal straight line (L = 1 mH) ===== -->
+  <line x1="90" y1="378" x2="560" y2="53" stroke="#1560d4" stroke-width="3"/>
+
+  <!-- slope annotation -->
+  <text x="470" y="150" font-size="14" fill="#1560d4" font-style="italic" text-anchor="middle">gradient = +1</text>
+  <text x="470" y="170" font-size="12" fill="#1560d4" text-anchor="middle">(one decade per decade)</text>
+
+  <!-- equations box -->
+  <g font-size="14">
+    <text x="120" y="90">Z&#8202;<tspan font-size="10" dy="4">L</tspan><tspan dy="-4"> = j&#969;L = j&#8202;2&#960;fL</tspan></text>
+    <text x="120" y="114" fill="#555">arg(Z&#8202;<tspan font-size="10" dy="4">L</tspan><tspan dy="-4">) = +90&#176;  (purely reactive)</tspan></text>
+    <text x="120" y="138" fill="#555" font-size="12">example line: L = 1&#8202;mH</text>
+  </g>
+</svg>
