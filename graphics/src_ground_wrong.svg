@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="420" viewBox="0 0 360 420" font-family="Georgia, 'Times New Roman', serif">
+  <rect width="360" height="420" fill="white"/>
+
+  <!-- ===== Potential divider (same topology as Zdiv.png) ===== -->
+  <g stroke="black" stroke-width="2" fill="none">
+    <line x1="70" y1="60" x2="250" y2="60"/>
+    <line x1="70" y1="60" x2="70" y2="150"/>
+    <line x1="70" y1="210" x2="70" y2="360"/>
+    <line x1="70" y1="360" x2="250" y2="360"/>
+    <line x1="250" y1="60" x2="250" y2="90"/>
+    <line x1="250" y1="160" x2="250" y2="230"/>
+    <line x1="250" y1="300" x2="250" y2="360"/>
+  </g>
+
+  <!-- source symbol -->
+  <circle cx="70" cy="180" r="30" stroke="black" stroke-width="2" fill="white"/>
+  <path d="M55 180 q7 -14 15 0 q8 14 15 0" stroke="black" stroke-width="2" fill="none"/>
+  <text x="20" y="185" font-size="17" font-style="italic">v<tspan font-size="11" dy="4">in</tspan></text>
+
+  <!-- R (top component) -->
+  <rect x="235" y="90" width="30" height="70" stroke="black" stroke-width="2" fill="white"/>
+  <text x="278" y="130" font-size="18" font-style="italic">R</text>
+  <text x="196" y="130" font-size="16" font-style="italic">v<tspan font-size="11" dy="4">R</tspan></text>
+
+  <!-- Z (bottom component, black box) -->
+  <rect x="235" y="230" width="30" height="70" stroke="black" stroke-width="2" fill="white"/>
+  <text x="278" y="270" font-size="18" font-style="italic">Z</text>
+  <text x="196" y="270" font-size="16" font-style="italic">v<tspan font-size="11" dy="4">Z</tspan></text>
+
+  <!-- ground symbol -->
+  <g stroke="black" stroke-width="2">
+    <line x1="70" y1="360" x2="70" y2="385"/>
+    <line x1="55" y1="385" x2="85" y2="385"/>
+    <line x1="60" y1="392" x2="80" y2="392"/>
+    <line x1="65" y1="399" x2="75" y2="399"/>
+  </g>
+
+  <!-- node dots -->
+  <g fill="black">
+    <circle cx="250" cy="60" r="3"/>
+    <circle cx="250" cy="195" r="3"/>
+    <circle cx="250" cy="360" r="3"/>
+  </g>
+
+  <!-- ===== Oscilloscope probe measuring v_R directly (WRONG) ===== -->
+  <!-- CH2 (orange): + at top node (top of R), gnd clip directly below it on the MIDDLE node -->
+  <g stroke="#e07b00" stroke-width="2" fill="none">
+    <line x1="250" y1="60" x2="320" y2="60"/>       <!-- + lead to top of R -->
+    <line x1="250" y1="195" x2="320" y2="195"/>     <!-- gnd lead to middle node (directly below +) -->
+  </g>
+  <circle cx="320" cy="60" r="9" fill="white" stroke="#e07b00" stroke-width="2"/>
+  <text x="316" y="65" font-size="13" fill="#e07b00" font-weight="bold">+</text>
+  <circle cx="320" cy="195" r="9" fill="white" stroke="#e07b00" stroke-width="2"/>
+  <text x="315.5" y="200" font-size="14" fill="#e07b00" font-weight="bold">&#8722;</text>
+  <text x="300" y="47" font-size="12" fill="#e07b00" font-weight="bold">CH2</text>
+
+  <!-- fault: earthed ground clip shorts the middle node to ground -->
+  <g stroke="#d11a1a" stroke-width="2" stroke-dasharray="5 4" fill="none">
+    <path d="M320 204 q22 55 -35 152" />
+  </g>
+  <g stroke="#d11a1a" stroke-width="2">
+    <line x1="292" y1="360" x2="270" y2="360"/>
+    <line x1="281" y1="360" x2="281" y2="378"/>
+    <line x1="273" y1="378" x2="289" y2="378"/>
+    <line x1="276" y1="384" x2="286" y2="384"/>
+    <line x1="279" y1="390" x2="283" y2="390"/>
+  </g>
+  <text x="150" y="345" font-size="11" fill="#d11a1a" font-style="italic">shorts Z to ground</text>
+
+  <!-- red cross -->
+  <g stroke="#d11a1a" stroke-width="6" fill="none" stroke-linecap="round">
+    <line x1="110" y1="90" x2="150" y2="130"/>
+    <line x1="150" y1="90" x2="110" y2="130"/>
+  </g>
+</svg>

@@ -15,6 +15,22 @@ Depending on the application, the non-ideal impedance may be important and it ca
 
 [![Potential divider for measuring impedance](graphics/Zdiv.png)](graphics/Zdiv.png)
 
+The oscilloscope measures every voltage with respect to a single **common ground**: the ground (−) terminals of all of its channels are joined together inside the instrument and tied to mains earth through the probe leads.
+Whatever node you clip a ground lead to is forced to 0V.
+This is exactly why the test circuit is built as a potential divider with one end of $Z$ connected to ground — it lets you measure $v_\text{Z}$ directly, with a channel's + lead on the mid-point and its − lead on the grounded end.
+
+The voltage across the resistor, $v_\text{R}$, cannot be measured in the same direct way, because *neither* end of $R$ sits at ground.
+If you try to read $v_\text{R}$ directly — clipping a channel's + lead above $R$ and its ground lead just below $R$, at the mid-point — that earthed ground lead drags the mid-point down to 0V and short-circuits $Z$.
+The measurement is meaningless and the circuit no longer behaves as a divider.
+Both channel grounds must therefore stay on the true common ground:
+
+<table>
+<tr>
+<td align="center"><img src="graphics/src_ground_correct.png" width="300"><br><b>Correct:</b> both ground leads on the common ground. <i>v</i><sub>R</sub> is recovered with the math channel.</td>
+<td align="center"><img src="graphics/src_ground_wrong.png" width="300"><br><b>Incorrect:</b> the ground lead placed below <i>R</i> shorts <i>Z</i> to ground.</td>
+</tr>
+</table>
+
 The calculation you applied earlier still works if the variables are complex:
 
 $$ Z=R\frac{V_\text{Z}}{V_\text{R}} $$
@@ -25,6 +41,22 @@ $$ |Z|=R\frac{|V_\text{Z}|}{|V_\text{R}|}=R\frac{v_\text{Z}}{v_\text{R}} $$
 
 We're using a notation where $V$ is a complex voltage, a phasor, while $v$ is a real voltage that has a magnitude but no argument.
 The component $Z$ is drawn as a resistor, but the relationship is true of any passive component with a complex impedance $Z$.
+
+### The math channel
+
+Because $v_\text{R}$ cannot be probed directly, it is recovered using the oscilloscope's **math channel**.
+Both channels are referenced to the common ground: CHA measures $v_\text{in}$ at the top of the divider and CHB measures $v_\text{Z}$ at the mid-point, each relative to ground.
+The math channel then subtracts one from the other, sample by sample, to reconstruct the voltage across $R$:
+
+$$ v_\text{R} = v_\text{in} - v_\text{Z} = \text{CHA} - \text{CHB} $$
+
+This gives $v_\text{R}$ even though $R$ is never connected to ground.
+Because the math channel is the *difference* of two sampled waveforms, its quality depends on both inputs being well-resolved: if either channel is noisy or poorly scaled, the subtraction amplifies that error and the reconstructed $v_\text{R}$ becomes unreliable.
+The main tool you have to control this is the test resistance $R$, and the two captures below show measurements that are too inaccurate to use and how changing $R$ fixes them:
+
+*CHB is small and fuzzy, and the vertical sensitivity is at its limit — decrease $R$.* [![Inaccurate oscilloscope measurement caused by small signal amplitude](graphics/PN-noisy.png)](graphics/PN-noisy.png)
+
+*The math channel is blocky (quantised) and it can't be accurately measured — increase $R$.* [![Inaccurate oscilloscope measurement caused by small residual after subtraction](graphics/PN-mathnoise.png)](graphics/PN-mathnoise.png)
 
 ### Impedance versus frequency
 
@@ -115,12 +147,7 @@ Therefore, change $R$ as you take measurements according to the following rules:
 These rules ensure that the magnitudes of $R$ and $Z$ do not differ by many decimal places.
 If the magnitudes differ a lot, your measurements will become inaccurate.
 If you are not sure if your oscilloscope measurement is accurate, you can also calculate the theoretical value of $|Z|$ and choose $R$ to be similar.
-
-Here are some examples of inaccurate oscilloscope measurements that could be fixed by changing $R$:
-
-*CHB is small and fuzzy, and the vertical sensitivity is at its limit. Decrease R* [![Inaccurate oscilloscope measurement casued by small signal amplitude](graphics/PN-noisy.png)](graphics/PN-noisy.png)
-
-*The math channel is blocky (quantised) and it can't be accurately measured. Increase R* [![Innacurate oscilloscope measurement caused by small residual after subtraction](graphics/PN-mathnoise.png)](graphics/PN-mathnoise.png)
+The two captures of inaccurate math-channel measurements shown earlier, together with the rules above, tell you which way to change $R$ when a measurement looks poor.
 
 Make measurements at the same frequency values that you used in your spreadsheet in the preparation task.
 Plot a graph to confirm the reciprocal relationship between impedance and frequency.
