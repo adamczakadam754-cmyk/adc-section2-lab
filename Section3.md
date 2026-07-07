@@ -85,6 +85,13 @@ Find the maximum magnitude of the impedance and explain why that is the maximum.
 
 - [ ] Plot the impedance of the parallel LC network as it varies with frequency and compare the measurements to theory. Overlay the plot with your results of the series LC network.
 
+### Band-pass filters
+
+The resonance you have just measured is the basis of a **band-pass filter** — a filter that passes a band of frequencies around a centre frequency $f_0$ and attenuates frequencies both above and below it.
+A series LC (or RLC) network has its lowest impedance at resonance, so when it is used as one arm of a potential divider it lets signals near $f_0$ through while blocking those far away; the sharper the resonance, the narrower the pass-band.
+Band-pass filters are used wherever a single band must be picked out from many — tuning a radio receiver to one station, or isolating a frequency of interest from a noisy instrumentation signal.
+This is the complement of the notch (band-stop) response, which rejects a band of frequencies instead of passing it.
+
 ## Second-order filter
 
 - [ ] Build the filter you designed in the preparation activity.
@@ -92,34 +99,25 @@ Measure the magnitude and phase responses between 1Hz and 100kHz.
 Produce a plot comparing the magnitude and phase responses with the results of your simulation.
 Explain any discrepancies.
 
-## Challenge: design a notch filter
+## Challenge: design a filter to match a target response
 
-A *notch filter* (also called a band-stop or band-reject filter) does the opposite of the resonant peaks you measured above: instead of passing a narrow band of frequencies, it removes one.
-It passes frequencies well below and well above a single *notch frequency* $f_0$, but strongly attenuates signals close to $f_0$.
-Notch filters are used to reject a specific unwanted tone while leaving the rest of the signal intact — for example, removing 50Hz mains hum from an audio recording or suppressing a fixed interference frequency in an instrumentation system.
+Design and build a filter whose frequency response matches the Bode plot below as closely as you can.
 
-You will build a passive **Twin-T notch filter**, which achieves the notch using only resistors and capacitors:
+[![Target frequency response](graphics/target_bode.png)](graphics/target_bode.png)
 
-![Twin-T notch filter](graphics/notch_filter_challenge.png)
+Start by reading the target off the plot:
 
-The circuit is two "T" networks in parallel.
-The upper T is made from two resistors $R2$ in series with a capacitor $C2$ to ground.
-The lower T is made from two capacitors $C1$ in series with a resistor $R1$ to ground.
-At the notch frequency the two paths produce signals that are equal in magnitude and opposite in phase at the output, so they cancel and $V_\text{out}$ falls (ideally) to zero.
+- The gain is **0 dB (unity)** at low frequency — the filter passes low frequencies unchanged.
+- The magnitude then rolls off as the frequency rises, so this is a **low-pass** response.
+- The phase falls steadily from 0° towards **−180°**. A total phase shift of 180° tells you the filter is **second-order** (it contains two reactive elements).
+- The magnitude is smooth with no peak before it rolls off, so the response is not underdamped (no resonant rise).
+- The −3 dB point sits in the region of **≈1 kHz**.
 
-For the notch to be deep and symmetric the two Ts must be *balanced*, which requires:
+Use the methods and components from this section to design a second-order low-pass filter that reproduces this shape — for example an RLC potential divider with the output taken across the capacitor, of the same family as the filter you designed in the preparation activity.
 
-$$ R2 = 2R1 \qquad \text{and} \qquad C2 = 2C1 $$
-
-With these conditions the notch frequency is set by:
-
-$$ f_0 = \frac{1}{2\pi R2\, C1} $$
-
-- [ ] Tune the circuit so that the notch is centred on **$f_0 = 1.592\,\text{kHz}$**.
-Note that $1.592\,\text{kHz}$ corresponds to $\omega_0 = 2\pi f_0 \approx 10^4\,\text{rad/s}$, i.e. $R2\,C1 = 1/(2\pi f_0) \approx 100\,\mu\text{s}$.
-Choose values of $R1$, $R2$, $C1$ and $C2$ from the parts list above that satisfy the balance conditions and place the notch within 10\% of the target.
-- [ ] Measure the magnitude and phase responses between 1Hz and 100kHz and plot them on logarithmic frequency axes.
-Identify the measured notch frequency and the depth of the notch, and explain any difference from the ideal (why the notch does not reach zero).
+- [ ] Derive the transfer function of your proposed circuit and choose component values from the parts list so that its predicted magnitude and phase match the target plot (unity pass-band, low-pass roll-off, −3 dB near 1 kHz, phase 0° → −180°).
+- [ ] Simulate your design in LT SPICE and compare its magnitude and phase response against the target.
+- [ ] Build the filter and measure its magnitude and phase response between 1Hz and 100kHz. Plot your measurements against the target and explain any differences.
 
 ## Specifications for RLC filters ##
 
