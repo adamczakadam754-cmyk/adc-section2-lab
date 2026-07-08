@@ -179,58 +179,70 @@ Verify your result using the LCR bridge (ask for help with this piece of equipme
 
 - [ ] Measure the value of one unknown inductor.
 
-### RC and RL filters
+### First-order RL and RC filters
 
-The impedance of a capacitor or an inductor changes with frequency, so combining one with a resistor produces a circuit whose behaviour depends on frequency.
+The impedance of an inductor or a capacitor changes with frequency, so combining one with a resistor produces a circuit whose behaviour depends on frequency.
 A circuit that changes a signal according to frequency is called a *filter*, and it is described by its *transfer function* $T(f)=V_\text{out}(f)/V_\text{in}$ — the ratio of output to input, which has both a magnitude and a phase.
-Each filter has a *corner (or centre) frequency* $f_c$ that marks the transition between the passed and attenuated frequencies.
+Each first-order filter has a *corner frequency* $f_c$ that marks the transition between the frequencies it passes and those it attenuates.
 
-The two circuits below are simple first-order filters, each a potential divider of a resistor and a reactive component.
-Their component values have been chosen so that both are centred on $f_c\approx159\text{Hz}$.
+You will characterise the same **RL filter** in two configurations. Both use $R_1 = 1\text{k}\Omega$ and $L_1 = 1\text{mH}$; the only difference is which component the output is taken across.
 
-The **RC filter** takes its output across the capacitor.
-With $R=1\text{k}\Omega$ and $C=1\mu\text{F}$ the corner frequency is $f_c=1/(2\pi RC)=1/(2\pi\cdot1000\cdot1\times10^{-6})\approx159\text{Hz}$.
-At low frequency the capacitor has a high impedance and holds most of the voltage, so the output follows the input; as frequency rises the capacitor's impedance falls and the output is attenuated — this is a **low-pass** response.
+**Low-pass (output across the resistor).**
+The inductor is in series and the output is taken across $R_1$.
+At low frequency the inductor's impedance is small, so almost all of the input appears across $R_1$ and the output follows the input; as frequency rises the inductor's impedance grows and takes a larger share of the voltage, so the output falls.
+The transfer function is $T = R_1/(R_1 + j\omega L_1)$, with corner frequency $f_c = R_1/(2\pi L_1)$.
 
-[![RC low-pass filter centred at 159 Hz](graphics/rc_filter.png)](graphics/rc_filter.png)
+[![RL low-pass filter: inductor in series, output across the resistor](graphics/rl_lowpass.png)](graphics/rl_lowpass.png)
 
-The **RL filter** takes its output across the inductor.
-With $R=100\Omega$ and $L=100\text{mH}$ the corner frequency is $f_c=R/(2\pi L)=100/(2\pi\cdot0.1)\approx159\text{Hz}$.
-At low frequency the inductor has a low impedance and drops almost no voltage, so the output is small; as frequency rises the inductor's impedance grows and the output increases — this is a **high-pass** response.
+**High-pass (output across the inductor).**
+Now the resistor is in series and the output is taken across $L_1$.
+At low frequency the inductor drops almost no voltage so the output is small; as frequency rises its impedance grows and the output increases.
+The transfer function is $T = j\omega L_1/(R_1 + j\omega L_1)$, with the same corner frequency $f_c = R_1/(2\pi L_1)$.
 
-[![RL high-pass filter centred at 159 Hz](graphics/rl_filter.png)](graphics/rl_filter.png)
+[![RL high-pass filter: resistor in series, output across the inductor](graphics/rl_highpass.png)](graphics/rl_highpass.png)
 
-Measure the transfer function of each filter with the signal generator driving the input: measure $V_\text{in}$ on CHA and $V_\text{out}$ on CHB, and record the magnitude ratio and phase difference at each frequency between 10Hz and 100kHz.
-Take the output **across the capacitor** for the first circuit and **across the inductor** for the second.
-Plot $|T(f)|$ against frequency on logarithmic axes and $\arg(T(f))$ on a linear axis.
+With $R_1 = 1\text{k}\Omega$ and $L_1 = 1\text{mH}$ the corner frequency is $f_c = R_1/(2\pi L_1) \approx 159\text{kHz}$, which sits near the top of the measurable range, so take your highest-frequency points as high as the equipment allows in order to capture the transition.
 
-- [ ] Measure and plot the magnitude and phase of the transfer function of the RC filter, taken across the capacitor.
+**Measuring the Bode plot.**
+A *Bode plot* shows both the magnitude and the phase of the transfer function against frequency. Measure it as follows:
 
-- [ ] Measure and plot the magnitude and phase of the transfer function of the RL filter, taken across the inductor.
+1. Drive the input with the signal generator set to a sine wave of fixed amplitude (for example 1V peak). Connect $V_\text{in}$ to oscilloscope CHA and $V_\text{out}$ to CHB, both referenced to the common ground.
+2. Step the frequency through logarithmically-spaced points (about 5–10 per decade) from 10Hz to 100kHz.
+3. At each frequency read the amplitudes of $V_\text{in}$ and $V_\text{out}$ and calculate the magnitude $|T| = |V_\text{out}|/|V_\text{in}|$, converting to decibels with $20\log_{10}|T|$. Keep the generator amplitude constant as you change frequency.
+4. Measure the phase with the oscilloscope cursors: read the time shift $\Delta t$ between the zero-crossings of $V_\text{in}$ and $V_\text{out}$ and convert it with $\arg(T) = 360\,f\,\Delta t$ (an output that lags the input is a negative phase).
+5. Plot $|T|$ in dB against $f$, and $\arg(T)$ in degrees against $f$, both on a logarithmic frequency axis — this pair of graphs is the Bode plot.
 
-Notice that in each circuit the resistor and the reactive component share the same current, so their voltages must add up to the input at every frequency.
-This means that if you instead measured the response **across the resistor**, you would obtain the *complementary* filter to the one measured across the other element: the RC filter measured across $R$ is a high-pass, and the RL filter measured across $R$ is a low-pass — in each case the mirror image of the response you plotted above.
+- [ ] Measure and plot the Bode plot (magnitude and phase) of the RL filter as a **low-pass** (output across $R_1$).
+
+- [ ] Rewire the circuit and measure the Bode plot of the same RL filter as a **high-pass** (output across $L_1$).
+
+**Recreate the responses with a capacitor.**
+The same two responses can be built from a resistor and a capacitor.
+Because a capacitor's impedance *falls* with frequency — the opposite of an inductor — the roles of the components are swapped: an RC filter is a **low-pass** when the output is taken across the *capacitor*, and a **high-pass** when the output is taken across the *resistor*.
+
+- [ ] Design an RC low-pass and an RC high-pass with the **same corner frequency** as your RL filter — choose $R$ and $C$ so that $1/(2\pi RC) = R_1/(2\pi L_1)$. Build them, measure their Bode plots with the same method, and overlay each on the matching RL response to confirm that the two filters have the same transfer function.
 
 ### Filter with a gain floor
 
-The filter above settles to a gain floor at high frequency, but its low-frequency gain is fixed at unity because the capacitor blocks the lower arm at low frequency.
-Often we want to set the low-frequency gain to a specific value below unity as well.
-This is done by adding a resistor $R_3$ in parallel with the capacitor $C_1$ in the lower leg of the divider, so that a defined resistance remains in the arm even when the capacitor is open.
+Sometimes we want a filter whose gain is fixed at one value at low frequency and settles to a different, non-zero *floor* at high frequency, rather than continuing all the way to unity or to zero.
+The circuit below achieves this using an inductor:
 
-[![A filter with a fixed gain floor](graphics/gain_floor.png)](graphics/gain_floor.png)
+[![Low-pass filter with a gain floor, built with an inductor](graphics/gain_floor_L.png)](graphics/gain_floor_L.png)
 
-At low frequency the capacitor is effectively open, so the gain is set by the divider of $R_1$ against $R_2+R_3$.
-At high frequency the capacitor behaves as a short circuit and removes $R_3$ from the divider, so the gain settles to a floor set by $R_1$ against $R_2$ alone and cannot fall any further.
-Between these two limits the response makes a first-order transition from the low-frequency gain down to the high-frequency floor.
+The upper arm is the inductor $L_1$ in parallel with $R_1$, followed by $R_3$ in series; the output is taken across $R_2$ at the bottom of the divider.
+At low frequency the inductor behaves as a short circuit and removes $R_1$ from the upper arm, so the gain is set by $R_3$ and $R_2$ alone: $T = R_2/(R_3+R_2) = 1\text{k}/2\text{k} = 0.5$.
+At high frequency the inductor behaves as an open circuit, so the full $R_1$ appears in the upper arm and the gain settles to its floor: $T = R_2/(R_1+R_3+R_2) = 1\text{k}/5\text{k} = 0.2$.
+Between these limits the response makes a first-order transition from the low-frequency gain of 0.5 down to the high-frequency floor of 0.2, with the transition near $f = R_1/(2\pi L_1) \approx 4.8\text{kHz}$.
 
-Measure the transfer function in the same way as the previous filter, recording the magnitude ratio and phase difference between 10Hz and 100kHz, and plot $|T(f)|$ on logarithmic axes and $\arg(T(f))$ on a linear axis.
+- [ ] Derive the transfer function of the circuit and confirm its low-frequency gain (0.5), its high-frequency gain floor (0.2) and its corner frequency.
 
-- [ ] Derive the transfer function of the circuit and predict its low-frequency gain, its high-frequency gain floor and its corner frequency.
+- [ ] Measure the transfer function with the signal generator driving the input, recording both the magnitude and the phase between 10Hz and 100kHz, and plot them as a Bode plot. Compare with your prediction.
 
-- [ ] Measure and plot the magnitude and phase of the transfer function, and compare them with your prediction.
+### Challenge: recreate the gain floor with resistors and a capacitor
 
-### Challenge: design a filter with a specified gain floor
+The inductor in the gain-floor circuit above can be replaced by a capacitor to obtain a filter with an identical transfer function.
 
-Design and build a filter that has a fixed gain at low frequency, a different fixed gain at high frequency, and a defined corner frequency between the two.
-Your filter must have a low-frequency gain of 0.5, a high-frequency gain of 0.1 and a corner frequency of 322Hz.
-Choose a suitable circuit and component values from the parts available so that all three specifications are met.
+- [ ] Design and build a filter that uses only resistors and a **capacitor** and has the **same transfer function** as the inductor gain-floor circuit above: a low-frequency gain of 0.5, a high-frequency gain floor of 0.2, and the same corner frequency.
+Measure its magnitude and phase response between 10Hz and 100kHz and overlay it on the response of the inductor circuit to confirm that the two match.
+
+*Hint:* a capacitor's impedance falls with frequency — the opposite of an inductor — so to reproduce the same low-pass shelf the capacitor must be placed in a different arm of the divider from where the inductor sat. Work out where it has to go so that the divider ratio changes from 0.5 at low frequency to 0.2 at high frequency.
