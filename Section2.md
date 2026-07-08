@@ -62,37 +62,53 @@ The main tool you have to control this is the test resistance $R$, and the two c
 
 ### Impedance versus frequency
 
-The reactance of an ideal inductor sets how its impedance changes with frequency.
-An ideal inductor has impedance
+The reactance of an ideal capacitor or inductor sets how its impedance changes with frequency: for an ideal inductor $|Z_L|=2\pi f L$ *rises* with frequency, and for an ideal capacitor $|Z_C|=1/(2\pi f C)$ *falls* with frequency.
+On logarithmic axes each is a straight line — sloping up for the inductor and down for the capacitor.
 
-$$ Z_L = j\omega L = j\,2\pi f L $$
+Real components are never purely reactive.
+Every physical inductor and capacitor also carries a small **series resistance** that comes from the ohmic conductors it is built from — the coil of wire in an inductor, and the leads, plates and dielectric losses in a capacitor (its *equivalent series resistance*, ESR).
+The simplest useful model of a real component places this resistance in series with the ideal reactance:
 
-so its magnitude
+[![Non-ideal inductor and capacitor modelled as an ideal component in series with a resistance](graphics/LCeq.png)](graphics/LCeq.png)
 
-$$ |Z_L| = 2\pi f L $$
+**Why this model is used.**
+The series-resistance model is popular because it is the simplest description that still captures how a real component actually behaves over the frequency range of this experiment (1Hz–100kHz):
 
-is directly proportional to frequency — as the frequency rises, the impedance rises with it.
-Plotted on logarithmic axes this proportionality becomes a straight line of gradient $+1$: every decade of frequency raises $|Z_L|$ by exactly one decade.
-The phase is constant at $\arg(Z_L)=+90°$, because the impedance is purely imaginary (purely reactive).
+- The series resistance is the *dominant* parasitic across this range. Other parasitics — an inductor's inter-winding capacitance, or a capacitor's lead inductance — only become important near self-resonance, which lies well above the frequencies you will measure, so they can be ignored here.
+- Because the resistance is in series, it simply adds to the reactance: $Z = R + jX$. The model therefore needs only *one* extra number, $R$, to describe the component's departure from ideal, which makes it easy both to analyse and to fit to measured data.
+- It reproduces the two features you actually observe in measurement: a flat resistive floor where the reactance becomes small, and a straight reactive line where the reactance dominates.
 
-Over the range 1Hz to 100kHz a pure inductor therefore has the ideal, linear characteristic below:
+**Inductor.**
+With the series resistance the impedance is $Z_L = j\omega L + R$, so its magnitude is $|Z_L| = \sqrt{R^2 + (2\pi f L)^2}$.
+At low frequency $2\pi f L \ll R$, so the magnitude flattens to the resistive floor $R$; at high frequency $2\pi f L \gg R$, so the magnitude climbs along the ideal $2\pi f L$ line.
+The two regions meet at the corner frequency $f = R/(2\pi L)$:
 
-[![Ideal impedance of a pure inductor versus frequency](graphics/ideal_inductor_Zvf.png)](graphics/ideal_inductor_Zvf.png)
+[![Impedance of an inductor: ideal versus non-ideal series-resistance model](graphics/inductor_Z_ideal_nonideal.png)](graphics/inductor_Z_ideal_nonideal.png)
 
-In this experiment you will work mainly in this *linear region*, where $|Z_L|$ is a straight line on logarithmic axes.
-This is the region where the series-resistance model below applies and where the value of the inductor can be found directly from its impedance using $L=|Z_L|/(2\pi f)$.
+The dashed line is the ideal inductor ($|Z_L| = 2\pi f L$, a straight line of gradient $+1$); the solid line is the non-ideal model.
+Note how the two are indistinguishable at high frequency and separate only once the reactance falls below $R$.
+
+- [ ] Using the potential-divider method and the math channel from earlier, measure the impedance of **two different inductors** (for example 1mH and 100mH) at logarithmically-spaced frequencies between 1Hz and 100kHz, and plot $|Z_L|$ against $f$ on logarithmic axes for each.
+
+Discuss your results: identify the inductive (straight, gradient $+1$) region and the low-frequency resistive floor of each inductor; read $L$ from the gradient of the reactive region and $R$ from the height of the floor; and compare the two components — which stays closer to the ideal line over the measured range, and why?
+
+**Capacitor.**
+The same reasoning applies with high and low frequency swapped.
+The non-ideal impedance is $Z_C = 1/(j\omega C) + R$, so $|Z_C| = \sqrt{R^2 + (1/2\pi f C)^2}$.
+Now the reactance is large at low frequency, so the magnitude follows the ideal $1/(2\pi f C)$ line there; at high frequency the reactance drops below the ESR and the magnitude flattens to the resistive floor $R$:
+
+[![Impedance of a capacitor: ideal versus non-ideal ESR model](graphics/capacitor_Z_ideal_nonideal.png)](graphics/capacitor_Z_ideal_nonideal.png)
+
+Again the dashed line is the ideal capacitor (a straight line of gradient $-1$) and the solid line the non-ideal model, which peels away from the ideal only once the reactance falls below the ESR.
+Capacitors are usually closer to ideal than inductors across this range because their series resistance is very small.
+
+- [ ] Measure the impedance of **two different capacitors** (for example 1µF and 33nF) with the same method, at logarithmically-spaced frequencies between 1Hz and 100kHz, and plot $|Z_C|$ against $f$ on logarithmic axes for each.
+
+Discuss your results: identify the capacitive (straight, gradient $-1$) region for each capacitor; check whether the ESR floor is reached within the measurable range; extract $C$ from the reactive region; and compare the two capacitors with each other, and with the inductors you measured earlier.
 
 ### Before the lab
 
-Real-world passive components have parasitic impedances — they behave like combinations of ideal components.
-The most significant parasitic impedance for inductors and capacitors is a series resistance, so the equivalent circuits can be drawn like this:
-
-[![Equivalent circuits of a non-ideal resistor and capacitor](graphics/LCeq.png)](graphics/LCeq.png)
-
-The parasitic resistance comes from the use of ohmic conductors in the components.
-For example, most of the parasitic resistance in an inductor comes from its internal coil of wire.
-
-Use a spreadsheet to calculate the overall complex impedance ( $Z_L$ ) of an inductor with inductance $L$ and parasitic resistance $R$ based on the expression $Z_L=j\omega L + R$.
+Using the series-resistance model introduced above, use a spreadsheet to calculate the overall complex impedance ( $Z_L$ ) of an inductor with inductance $L$ and parasitic resistance $R$ based on the expression $Z_L=j\omega L + R$.
 Set up the spreadsheet to create a table of impedances for frequencies between 1Hz and 100kHz. For example, with $L=1 \times 10^{-3}\text{H}$ and $R=10\Omega$ :
 
 | $f$ | $\|Z\_L\|$ | $\arg(Z\_L)$ |
