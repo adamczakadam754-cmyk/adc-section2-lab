@@ -60,7 +60,7 @@ The main tool you have to control this is the test resistance $R$, and the two c
 
 *The math channel is blocky (quantised) and it can't be accurately measured — increase $R$.* [![Inaccurate oscilloscope measurement caused by small residual after subtraction](graphics/PN-mathnoise.png)](graphics/PN-mathnoise.png)
 
-### Impedance versus frequency
+### Before the lab
 
 The reactance of an ideal capacitor or inductor sets how its impedance changes with frequency: for an ideal inductor $|Z_L|=2\pi f L$ *rises* with frequency, and for an ideal capacitor $|Z_C|=1/(2\pi f C)$ *falls* with frequency.
 On logarithmic axes each is a straight line — sloping up for the inductor and down for the capacitor.
@@ -78,37 +78,7 @@ The series-resistance model is popular because it is the simplest description th
 - Because the resistance is in series, it simply adds to the reactance: $Z = R + jX$. The model therefore needs only *one* extra number, $R$, to describe the component's departure from ideal, which makes it easy both to analyse and to fit to measured data.
 - It reproduces the two features you actually observe in measurement: a flat resistive floor where the reactance becomes small, and a straight reactive line where the reactance dominates.
 
-**Inductor.**
-With the series resistance the impedance is $Z_L = j\omega L + R$, so its magnitude is $|Z_L| = \sqrt{R^2 + (2\pi f L)^2}$.
-At low frequency $2\pi f L \ll R$, so the magnitude flattens to the resistive floor $R$; at high frequency $2\pi f L \gg R$, so the magnitude climbs along the ideal $2\pi f L$ line.
-The two regions meet at the corner frequency $f = R/(2\pi L)$:
-
-[![Impedance of an inductor: ideal versus non-ideal series-resistance model](graphics/inductor_Z_ideal_nonideal.png)](graphics/inductor_Z_ideal_nonideal.png)
-
-The dashed line is the ideal inductor ($|Z_L| = 2\pi f L$, a straight line of gradient $+1$); the solid line is the non-ideal model.
-Note how the two are indistinguishable at high frequency and separate only once the reactance falls below $R$.
-
-- [ ] Using the potential-divider method and the math channel from earlier, measure the impedance of **two different inductors** (for example 1mH and 100mH) at logarithmically-spaced frequencies between 1Hz and 100kHz, and plot $|Z_L|$ against $f$ on logarithmic axes for each.
-
-Discuss your results: identify the inductive (straight, gradient $+1$) region and the low-frequency resistive floor of each inductor; read $L$ from the gradient of the reactive region and $R$ from the height of the floor; and compare the two components — which stays closer to the ideal line over the measured range, and why?
-
-**Capacitor.**
-The same reasoning applies with high and low frequency swapped.
-The non-ideal impedance is $Z_C = 1/(j\omega C) + R$, so $|Z_C| = \sqrt{R^2 + (1/2\pi f C)^2}$.
-Now the reactance is large at low frequency, so the magnitude follows the ideal $1/(2\pi f C)$ line there; at high frequency the reactance drops below the ESR and the magnitude flattens to the resistive floor $R$:
-
-[![Impedance of a capacitor: ideal versus non-ideal ESR model](graphics/capacitor_Z_ideal_nonideal.png)](graphics/capacitor_Z_ideal_nonideal.png)
-
-Again the dashed line is the ideal capacitor (a straight line of gradient $-1$) and the solid line the non-ideal model, which peels away from the ideal only once the reactance falls below the ESR.
-Capacitors are usually closer to ideal than inductors across this range because their series resistance is very small.
-
-- [ ] Measure the impedance of **two different capacitors** (for example 1µF and 33nF) with the same method, at logarithmically-spaced frequencies between 1Hz and 100kHz, and plot $|Z_C|$ against $f$ on logarithmic axes for each.
-
-Discuss your results: identify the capacitive (straight, gradient $-1$) region for each capacitor; check whether the ESR floor is reached within the measurable range; extract $C$ from the reactive region; and compare the two capacitors with each other, and with the inductors you measured earlier.
-
-### Before the lab
-
-Using the series-resistance model introduced above, use a spreadsheet to calculate the overall complex impedance ( $Z_L$ ) of an inductor with inductance $L$ and parasitic resistance $R$ based on the expression $Z_L=j\omega L + R$.
+Using this series-resistance model, use a spreadsheet to calculate the overall complex impedance ( $Z_L$ ) of an inductor with inductance $L$ and parasitic resistance $R$ based on the expression $Z_L=j\omega L + R$.
 Set up the spreadsheet to create a table of impedances for frequencies between 1Hz and 100kHz. For example, with $L=1 \times 10^{-3}\text{H}$ and $R=10\Omega$ :
 
 | $f$ | $\|Z\_L\|$ | $\arg(Z\_L)$ |
@@ -137,13 +107,46 @@ As an example, $|Z_L|$ vs. $f$ should look something like this, depending on the
 
 [![Prediction of impedance of an inductor](graphics/ZL_vs_f_excel.png)](graphics/ZL_vs_f_excel.png)
 
+### Impedance versus frequency
+
+**Inductor.**
+With the series resistance the impedance is $Z_L = j\omega L + R$, so its magnitude is $|Z_L| = \sqrt{R^2 + (2\pi f L)^2}$.
+At low frequency $2\pi f L \ll R$, so the magnitude flattens to the resistive floor $R$; at high frequency $2\pi f L \gg R$, so the magnitude climbs along the ideal $2\pi f L$ line.
+The two regions meet at the corner frequency $f = R/(2\pi L)$:
+
+[![Impedance of an inductor: ideal versus non-ideal series-resistance model](graphics/inductor_Z_ideal_nonideal.png)](graphics/inductor_Z_ideal_nonideal.png)
+
+The dashed line is the ideal inductor ($|Z_L| = 2\pi f L$, a straight line of gradient $+1$); the solid line is the non-ideal model.
+Note how the two are indistinguishable at high frequency and separate only once the reactance falls below $R$.
+
+Inductors tend to be less faithful to an ideal component than capacitors: at low frequency the parasitic resistance of the coil of wire becomes significant compared with the reactance, and at high frequency the capacitance between the tightly-packed turns of wire can cause further non-ideal behaviour.
+This makes careful measurement important.
+Measure the impedance with the potential-divider method and the math channel from earlier, choosing the test resistance $R$ so that both $v_\text{Z}$ and $v_\text{R}$ are easy to read (the same $R$-selection rules given for the capacitor below apply here).
+Update your graph with every data point as you take it, so you can see whether the points lie on a trend: if three points within a decade ( $\times10$ in frequency) fall on a straight line you can assume the characteristic is straight between them; if not, fill in extra measurements to find the shape of the curve.
+On logarithmic axes a small vertical deviation represents a large change, so don't dismiss anomalies as experimental error — check them.
+
+- [ ] Measure the impedance of **two different inductors** (for example 1mH and 100mH) at logarithmically-spaced frequencies between 1Hz and 100kHz, plot $|Z_L|$ against $f$ on logarithmic axes for each, and find the extent of frequencies over which each obeys the ideal equation $|Z_L|=2\pi f L$.
+
+Discuss your results: identify the inductive (straight, gradient $+1$) region and the low-frequency resistive floor of each inductor; read $L$ from the gradient of the reactive region and $R$ from the height of the floor; and compare the two components — which stays closer to the ideal line over the measured range, and why?
+
+Plot your experimental data on the same axes as your prediction from the preparation exercise, and tune the values of $L$ and $R$ to make the model fit your real inductor as closely as possible. How well does the model fit?
+
+- [ ] Fit your model to the experimental data and create a graph that compares them.
+
 ### Characterising a capacitor
 
-The impedance of a capacitor decreases in magnitude with frequency.
-Change $Z$ in your circuit to a 1μF capacitor and measure its impedance by recording $v_\text{Z}$ and $v_\text{R}$.
-This time, you will need to take measurements at multiple points between 1Hz and 100kHz because the impedance of a capacitor varies with frequency.
-At each frequency, use $v_\text{Z}$, $v_\text{R}$ and $R$ to calculate impedance.
-Record the measurements in a spreadsheet and use a formula to make the impedance calculation $|Z|=Rv_\text{Z}/v_\text{R}$.
+**Capacitor.**
+The same reasoning applies with high and low frequency swapped.
+The non-ideal impedance is $Z_C = 1/(j\omega C) + R$, so $|Z_C| = \sqrt{R^2 + (1/2\pi f C)^2}$.
+Now the reactance is large at low frequency, so the magnitude follows the ideal $1/(2\pi f C)$ line there; at high frequency the reactance drops below the ESR and the magnitude flattens to the resistive floor $R$:
+
+[![Impedance of a capacitor: ideal versus non-ideal ESR model](graphics/capacitor_Z_ideal_nonideal.png)](graphics/capacitor_Z_ideal_nonideal.png)
+
+Again the dashed line is the ideal capacitor (a straight line of gradient $-1$) and the solid line the non-ideal model, which peels away from the ideal only once the reactance falls below the ESR.
+Capacitors are usually closer to ideal than inductors across this range because their series resistance is very small.
+
+**Making the measurement.**
+Connect the capacitor as $Z$ in the potential divider and, at each frequency, record $v_\text{Z}$ and $v_\text{R}$ and compute the impedance from $|Z| = R\,v_\text{Z}/v_\text{R}$ with a spreadsheet formula. Record your data like this:
 
 | $f$ | $R$ | $v\_\text{Z}$ | $v\_\text{R}$ | $\|Z\|$ |
 | --- | --- | ------------- | ------------- | ------- |
@@ -153,45 +156,16 @@ Record the measurements in a spreadsheet and use a formula to make the impedance
 | 32  |     |               |               |         |
 | …   |     |               |               |         |
 
-You will need to choose a value of $R$, the test resistance: start with 1kΩ.
-The value of $R$ has an effect on the accuracy of the measurement.
-Therefore, change $R$ as you take measurements according to the following rules:
+You must choose a value of the test resistance $R$, and it affects the accuracy of the measurement — start with 1kΩ and change it as you go according to these rules:
 
-- If $v_\text{Z}$ (CHB) is less than 5mV RMS, decrease $R$ by a factor of 100 down to a minimum of 10Ω.
-- If $v_\text{R}$ (math channel) is smaller than 1 vertical division peak to peak, increase $R$ by a factor of 100.
+- If $v_\text{Z}$ (CHB) is less than 5mV RMS, decrease $R$ by a factor of 100 (down to a minimum of 10Ω).
+- If $v_\text{R}$ (math channel) is smaller than 1 vertical division peak-to-peak, increase $R$ by a factor of 100.
 
-These rules ensure that the magnitudes of $R$ and $Z$ do not differ by many decimal places.
-If the magnitudes differ a lot, your measurements will become inaccurate.
-If you are not sure if your oscilloscope measurement is accurate, you can also calculate the theoretical value of $|Z|$ and choose $R$ to be similar.
-The two captures of inaccurate math-channel measurements shown earlier, together with the rules above, tell you which way to change $R$ when a measurement looks poor.
+These rules keep the magnitudes of $R$ and $Z$ close, which is where the measurement is most accurate; if they differ by many decimal places the reading becomes unreliable. If you are unsure, calculate the theoretical $|Z|$ and choose $R$ to be similar. The two captures of inaccurate math-channel measurements shown earlier tell you which way to change $R$ when a reading looks poor. Take measurements at the same logarithmically-spaced frequencies you used in the preparation task, and plot each point as you go.
 
-Make measurements at the same frequency values that you used in your spreadsheet in the preparation task.
-Plot a graph to confirm the reciprocal relationship between impedance and frequency.
-Use logarithmic scaling on both axes, which will show the $Z\propto1/f$ characteristic of the capacitor as a straight line with gradient -1.
-Capacitors tend to have a near-ideal relationship between frequency and impedance in the frequency range you are measuring.
+- [ ] Measure the impedance of **two different capacitors** (for example 1μF and 33nF) between 1Hz and 100kHz, plot $|Z_C|$ against $f$ on logarithmic axes for each, and confirm that they obey $|Z_C|=1/(2\pi f C)$ (a straight line of gradient $-1$).
 
-- [ ] Measure impedance at different frequencies to confirm that the 1μF and 33nF capacitors obey the equation $|Z_C|=1/(\omega C)$ between 10Hz and 100kHz.
-
-### Characterising an inductor
-
-The impedance of an inductor can be measured in the same way as the capacitor.
-We now expect the opposite relationship between frequency and impedance.
-Inductors tend to be less faithful to an ideal component than capacitors, particularly at low frequencies when the parasitic resistance of the coil of wire can become significant compared to the reactance.
-Furthermore, capacitance between the tightly-packed turns of wire can cause non-ideal behaviour at high frequencies too.
-
-The parasitic impedances makes it important to take care when making measurements.
-Update your graph with each data point so that you can see whether or not your points lie on a trend.
-If three points within a decade ( $\times10$ difference) of frequency lie on a straight line you can assume the characteristic between the points is a straight line.
-If not, then check your measurements and fill in extra observations to find the shape of the curve between measurements.
-On logarithmic axes, small deviations can represent quite large amounts so don't be tempted to explain anomalies as experimental inaccuracy.
-
-- [ ] Characterise the impedance of the 1mH and 100mH inductors between 1Hz and 100kHz. Find the extent of frequencies over which they obey the ideal equation $|Z_L|=\omega L$.
-
-Plot your experimental data on the same axes as your prediction from the preparation exercise.
-Tune the values of $L$ and $R$ to make the model fit your real inductor as closely as possible.
-How well does the model fit?
-
-- [ ] Fit your model to the experimental data and create a graph that compares them.
+Discuss your results: identify the capacitive (straight, gradient $-1$) region for each capacitor; check whether the ESR floor is reached within the measurable range; extract $C$ from the reactive region; and compare the two capacitors with each other, and with the inductors you measured earlier.
 
 ### Measuring an unknown inductor
 
