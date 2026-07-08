@@ -138,18 +138,6 @@ These rules keep the magnitudes of $R$ and $Z$ close, which is where the measure
 
 Discuss your results: identify the capacitive (straight, gradient $-1$) region for each capacitor; check whether the ESR floor is reached within the measurable range; extract $C$ from the reactive region; and compare the two capacitors with each other, and with the inductors you measured earlier.
 
-### Measuring an unknown inductor
-
-There is a box of unmarked inductors. Pick out one unknown inductor and find its inductance.
-
-Because $|Z_L|=2\pi f L$ is a straight line through the origin in the linear region, only a few measurements are needed to determine $L$ accurately.
-As long as you stay in the linear region — above the low frequencies where the parasitic series resistance dominates, and below self-resonance — every measurement lies on the same straight line, so a handful of points is enough to fix its gradient.
-Take impedance measurements at a small number of frequencies in this region and find $L$ from the gradient of $|Z_L|$ against $f$, or equivalently from $L=|Z_L|/(2\pi f)$ at each point.
-Additional measurements only confirm the value rather than refining it.
-Verify your result using the LCR bridge (ask for help with this piece of equipment), then return the inductor so that others can use it.
-
-- [ ] Measure the value of one unknown inductor.
-
 ### First-order RL and RC filters
 
 The impedance of an inductor or a capacitor changes with frequency, so combining one with a resistor produces a circuit whose behaviour depends on frequency.
