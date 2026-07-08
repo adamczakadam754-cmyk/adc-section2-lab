@@ -156,7 +156,7 @@ The impedance of an inductor or a capacitor changes with frequency, so combining
 A circuit that changes a signal according to frequency is called a *filter*, and it is described by its *transfer function* $T(f)=V_\text{out}(f)/V_\text{in}$ — the ratio of output to input, which has both a magnitude and a phase.
 Each first-order filter has a *corner frequency* $f_c$ that marks the transition between the frequencies it passes and those it attenuates.
 
-You will characterise the same **RL filter** in two configurations. Both use $R_1 = 1\text{k}\Omega$ and $L_1 = 1\text{mH}$; the only difference is which component the output is taken across.
+You will characterise the same **RL filter** in two configurations. Both use $R_1 = 1\text{k}\Omega$ and $L_1 = 100\text{mH}$; the only difference is which component the output is taken across.
 
 **Low-pass (output across the resistor).**
 The inductor is in series and the output is taken across $R_1$.
@@ -172,7 +172,7 @@ The transfer function is $T = j\omega L_1/(R_1 + j\omega L_1)$, with the same co
 
 [![RL high-pass filter: resistor in series, output across the inductor](graphics/rl_highpass.png)](graphics/rl_highpass.png)
 
-With $R_1 = 1\text{k}\Omega$ and $L_1 = 1\text{mH}$ the corner frequency is $f_c = R_1/(2\pi L_1) \approx 159\text{kHz}$, which lies well above the top of the measurement range, so within 10Hz–40kHz you will capture only the very start of the transition — take your highest-frequency points as high as the equipment allows.
+With $R_1 = 1\text{k}\Omega$ and $L_1 = 100\text{mH}$ the corner frequency is $f_c = R_1/(2\pi L_1) \approx 1.59\text{kHz}$, which sits comfortably inside the 10Hz–40kHz measurement range so that both the pass-band and the roll-off are captured on either side of the corner.
 
 **Measuring the Bode plot.**
 A *Bode plot* shows both the magnitude and the phase of the transfer function against frequency. Measure it as follows:

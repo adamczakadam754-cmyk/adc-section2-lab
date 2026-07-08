@@ -118,7 +118,7 @@ With $R_1=R_2=10\text{k}\Omega$, $C_1=C_2=10\text{nF}$ and the balancing compone
 Measure the transfer function $T(f)=V_\text{out}/V_\text{in}$ of each filter as a Bode plot — its magnitude and phase against frequency:
 
 1. Drive $V_\text{in}$ with the signal generator set to a sine of fixed amplitude, and connect $V_\text{in}$ to oscilloscope CHA and $V_\text{out}$ to CHB, both referenced to the common ground.
-2. Sweep the frequency in logarithmically-spaced steps (about 5–10 points per decade) from 1Hz to 100kHz.
+2. Sweep the frequency in logarithmically-spaced steps (about 5–10 points per decade) from 1Hz to 40kHz.
 3. At each frequency record the amplitudes of $V_\text{in}$ and $V_\text{out}$, compute $|T|=|V_\text{out}|/|V_\text{in}|$ and convert it to decibels with $20\log_{10}|T|$.
 4. Read the phase from the time shift $\Delta t$ between the zero-crossings of $V_\text{in}$ and $V_\text{out}$, using $\arg(T)=360\,f\,\Delta t$ (an output that lags the input is a negative phase).
 5. Around any rapidly-changing feature — the roll-off of the low-pass, and especially the null of the notch — take extra, closely-spaced points, and plot each point as you go so you can see where more detail is needed.
@@ -136,4 +136,4 @@ Design and build a filter whose frequency response matches the Bode plot below a
 
 - [ ] Study the target plot and work out what kind of filter produces it. Read off the pass-band gain, how steeply the magnitude rolls off, the total change in phase from low to high frequency, and the corner frequency — and use these to decide what circuit you need and how many reactive elements it must contain.
 - [ ] Choose component values from the parts list so that your design's predicted magnitude and phase match the target, and verify the design in LT SPICE.
-- [ ] Build the filter, measure its magnitude and phase response between 1Hz and 100kHz, and plot your measurements against the target. Explain any differences.
+- [ ] Build the filter, measure its magnitude and phase response between 1Hz and 40kHz, and plot your measurements against the target. Explain any differences.
