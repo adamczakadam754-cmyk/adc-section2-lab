@@ -78,35 +78,6 @@ The series-resistance model is popular because it is the simplest description th
 - Because the resistance is in series, it simply adds to the reactance: $Z = R + jX$. The model therefore needs only *one* extra number, $R$, to describe the component's departure from ideal, which makes it easy both to analyse and to fit to measured data.
 - It reproduces the two features you actually observe in measurement: a flat resistive floor where the reactance becomes small, and a straight reactive line where the reactance dominates.
 
-Using this series-resistance model, use a spreadsheet to calculate the overall complex impedance ( $Z_L$ ) of an inductor with inductance $L$ and parasitic resistance $R$ based on the expression $Z_L=j\omega L + R$.
-Set up the spreadsheet to create a table of impedances for frequencies between 1Hz and 100kHz. For example, with $L=1 \times 10^{-3}\text{H}$ and $R=10\Omega$ :
-
-| $f$ | $\|Z\_L\|$ | $\arg(Z\_L)$ |
-| --- | ---------- | ------------ |
-| 1   | 10.0       | 0.0          |
-| 3.2 | …          | …            |
-| 10  |            |              |
-| 32  |            |              |
-| 100 |            |              |
-| …   |            |              |
-
-Create formulas to calculate the magnitude and argument of $Z_L$ for each frequency based on the chosen values for L and R.
-Note that the frequencies increase in an exponential sequence, not linear — this is a more useful way of showing data which covers such a large range and it is used very commonly in EEE.
-Remember to convert from frequency in Hz to angular velocity $\omega$ in $\text{rad}s^{-1}$.
-
-Repeat the same calculation for a capacitor, whose non-ideal impedance is $Z_C=1/(j\omega C)+R$, using its own capacitance $C$ and parasitic series resistance $R$.
-
-Finally, for **both** the inductor and the capacitor, create a graph that overlays the *ideal* and *non-ideal* characteristics on the same axes:
-
-- the **ideal** characteristic, *excluding* the parasitic ohmic resistance ( $Z_L=j\omega L$ and $Z_C=1/(j\omega C)$ )
-- the **non-ideal** characteristic, *including* the series resistance ( $Z_L=j\omega L+R$ and $Z_C=1/(j\omega C)+R$ )
-
-For each component plot $|Z|$ vs. $f$ and $\arg(Z)$ vs. $f$, overlapping the ideal and non-ideal curves so you can see exactly where the parasitic resistance makes the real component depart from the ideal.
-Set the graph to use logarithmic scales for axes showing $f$ and $|Z|$, and linear scales for axes showing $\arg(Z)$.
-As an example, $|Z_L|$ vs. $f$ should look something like this, depending on the values of $R$ and $L$:
-
-[![Prediction of impedance of an inductor](graphics/ZL_vs_f_excel.png)](graphics/ZL_vs_f_excel.png)
-
 ### Impedance versus frequency
 
 **Inductor.**
@@ -118,6 +89,8 @@ The two regions meet at the corner frequency $f = R/(2\pi L)$:
 
 The dashed line is the ideal inductor ($|Z_L| = 2\pi f L$, a straight line of gradient $+1$); the solid line is the non-ideal model.
 Note how the two are indistinguishable at high frequency and separate only once the reactance falls below $R$.
+
+### Characterising an inductor
 
 Inductors tend to be less faithful to an ideal component than capacitors: at low frequency the parasitic resistance of the coil of wire becomes significant compared with the reactance, and at high frequency the capacitance between the tightly-packed turns of wire can cause further non-ideal behaviour.
 This makes careful measurement important.
