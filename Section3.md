@@ -14,11 +14,11 @@ A resistor, capacitor and inductor can be combined to make a *second-order RLC f
 
 ![RLC high-pass filter](graphics/RLChigh.png)
 
-Use your lecture notes to design a RLC filter to achieve the shape and corner frequency listed for your pair in the table at the end of this page.
-Choose a value of $R$ that will make your system critically-damped ( $\zeta=1$ ).
-Pick component values from the list of available parts below to get a corner frequency within 10\% of the specification.
+Use your lecture notes to revise how a second-order RLC filter behaves and how the value of $R$ sets its damping.
+Choosing $R$ so that the circuit is critically damped ( $\zeta=1$ ) gives the smoothest response, with no resonant peak.
+The components available for this section are listed below; you will use them for the filters you measure and for the design challenge at the end.
 
-Use LT SPICE to produce the magnitude and phase responses of your filter (do this after LT SPICE has been introduced in problem classes)
+Use LT SPICE to produce the magnitude and phase responses of an example second-order RLC filter (do this after LT SPICE has been introduced in problem classes)
 
 **Resistors ( $\times10^0\Omega$ to $\times10^6\Omega$ )**
 
@@ -92,148 +92,48 @@ A series LC (or RLC) network has its lowest impedance at resonance, so when it i
 Band-pass filters are used wherever a single band must be picked out from many — tuning a radio receiver to one station, or isolating a frequency of interest from a noisy instrumentation signal.
 This is the complement of the notch (band-stop) response, which rejects a band of frequencies instead of passing it.
 
-## Second-order filter
+## Second-order filters
 
-- [ ] Build the filter you designed in the preparation activity.
-Measure the magnitude and phase responses between 1Hz and 100kHz.
-Produce a plot comparing the magnitude and phase responses with the results of your simulation.
-Explain any discrepancies.
+A second-order filter contains two reactive elements, so it rolls off twice as steeply as a first-order filter (up to $\pm40$dB/decade) and its phase can swing through a full $180°$.
+Two second-order filters are provided below; you will measure the transfer function of each.
+
+### Second-order low-pass
+
+[![Second-order RC low-pass filter](graphics/second_order_rc_lowpass.png)](graphics/second_order_rc_lowpass.png)
+
+This is a two-stage RC ladder: the input drives $R_1$ into $C_1$, and that node drives $R_2$ into $C_2$, with the output taken across $C_2$.
+Each RC stage is a first-order low-pass, and cascading two of them makes a **second-order low-pass**: at low frequency both capacitors are effectively open so the output follows the input (0 dB), and as the frequency rises each stage attenuates the signal, so the magnitude eventually falls at $-40$dB/decade while the phase tends towards $-180°$.
+With $R_1=R_2=10\text{k}\Omega$ and $C_1=C_2=100\text{nF}$ the roll-off begins near $f\approx1/(2\pi RC)\approx160\text{Hz}$.
+
+### Second-order band-stop (notch)
+
+[![Twin-T notch filter](graphics/twin_t_notch.png)](graphics/twin_t_notch.png)
+
+This is a **Twin-T notch filter**, made of two "T" networks in parallel: an upper T of two resistors ($R_1$, $R_2$) with a capacitor ($C_3$) to ground, and a lower T of two capacitors ($C_1$, $C_2$) with a resistor ($R_3$) to ground.
+Away from a single *notch frequency* $f_0$ the signal passes at close to 0 dB, but at $f_0$ the two paths arrive equal and opposite and cancel, so the magnitude drops sharply into a deep null while the phase swings rapidly.
+With $R_1=R_2=10\text{k}\Omega$, $C_1=C_2=10\text{nF}$ and the balancing components $C_3=22\text{nF}$ ( $\approx2C$ ) and $R_3=5.1\text{k}\Omega$ ( $\approx R/2$ ), the notch sits at $f_0=1/(2\pi R_1 C_1)\approx1.6\text{kHz}$.
+
+### Measuring the transfer function
+
+Measure the transfer function $T(f)=V_\text{out}/V_\text{in}$ of each filter as a Bode plot — its magnitude and phase against frequency:
+
+1. Drive $V_\text{in}$ with the signal generator set to a sine of fixed amplitude, and connect $V_\text{in}$ to oscilloscope CHA and $V_\text{out}$ to CHB, both referenced to the common ground.
+2. Sweep the frequency in logarithmically-spaced steps (about 5–10 points per decade) from 1Hz to 100kHz.
+3. At each frequency record the amplitudes of $V_\text{in}$ and $V_\text{out}$, compute $|T|=|V_\text{out}|/|V_\text{in}|$ and convert it to decibels with $20\log_{10}|T|$.
+4. Read the phase from the time shift $\Delta t$ between the zero-crossings of $V_\text{in}$ and $V_\text{out}$, using $\arg(T)=360\,f\,\Delta t$ (an output that lags the input is a negative phase).
+5. Around any rapidly-changing feature — the roll-off of the low-pass, and especially the null of the notch — take extra, closely-spaced points, and plot each point as you go so you can see where more detail is needed.
+6. Plot $|T|$ in dB and $\arg(T)$ in degrees, both against frequency on a logarithmic axis.
+
+- [ ] Measure and plot the Bode plot (magnitude and phase) of the second-order low-pass filter.
+
+- [ ] Measure and plot the Bode plot of the Twin-T notch filter, taking extra points around the notch to capture its depth and centre frequency.
 
 ## Challenge: design a filter to match a target response
 
-Design and build a filter whose frequency response matches the Bode plot below as closely as you can.
+Design and build a filter whose frequency response matches the Bode plot below as closely as you can. The plot shows the magnitude and the phase of $T(f)=V_\text{out}/V_\text{in}$ against frequency.
 
-[![Target frequency response](graphics/target_bode.png)](graphics/target_bode.png)
+[![Target frequency response](graphics/challenge_bode.png)](graphics/challenge_bode.png)
 
-Start by reading the target off the plot:
-
-- The gain is **0 dB (unity)** at low frequency — the filter passes low frequencies unchanged.
-- The magnitude then rolls off as the frequency rises, so this is a **low-pass** response.
-- The phase falls steadily from 0° towards **−180°**. A total phase shift of 180° tells you the filter is **second-order** (it contains two reactive elements).
-- The magnitude is smooth with no peak before it rolls off, so the response is not underdamped (no resonant rise).
-- The −3 dB point sits in the region of **≈1 kHz**.
-
-Use the methods and components from this section to design a second-order low-pass filter that reproduces this shape — for example an RLC potential divider with the output taken across the capacitor, of the same family as the filter you designed in the preparation activity.
-
-- [ ] Derive the transfer function of your proposed circuit and choose component values from the parts list so that its predicted magnitude and phase match the target plot (unity pass-band, low-pass roll-off, −3 dB near 1 kHz, phase 0° → −180°).
-- [ ] Simulate your design in LT SPICE and compare its magnitude and phase response against the target.
-- [ ] Build the filter and measure its magnitude and phase response between 1Hz and 100kHz. Plot your measurements against the target and explain any differences.
-
-## Specifications for RLC filters ##
-
-Each lab pair has a specified filter type and corner frequency for their RLC filter.
-
-| Pair | Type | $f_c$ |
-| -- | -- | -- |    			
-A01|	LP|	1900
-A02|	HP|	8700
-A03|	HP|	7400
-A04|	HP|	1800
-A05|	HP|	8800
-A06|	HP|	1900
-A07|	HP|	8800
-A08|	HP|	5000
-A09|	HP|	2800
-A10|	LP|	2700
-A11|	HP|	2300
-A12|	LP|	1900
-A13|	HP|	4900
-A14|	HP|	5000
-A15|	HP|	5300
-A16|	LP|	5900
-A17|	LP|	7400
-A18|	LP|	7300
-A19|	HP|	4100
-A20|	HP|	1700
-A21|	LP|	7400
-A22|	HP|	5900
-A23|	LP|	3400
-A24|	LP|	1600
-A25|	HP|	8700
-A26|	HP|	8800
-A27|	HP|	3400
-A28|	LP|	8800
-A29|	LP|	8700
-A30|	LP|	970
-A31|	HP|	730
-A32|	LP|	3400
-A33|	HP|	3400
-A34|	HP|	5900
-A35|	LP|	4000
-A36|	HP|	3400
-A37|	LP|	1700
-A38|	LP|	8700
-A39|	LP|	5100
-A40|	HP|	4000
-A41|	LP|	3400
-A42|	HP|	5900
-A43|	HP|	4000
-A44|	HP|	1900
-A45|	HP|	4900
-A46|	HP|	5900
-A47|	LP|	2800
-A48|	LP|	6600
-A49|	HP|	2300
-A50|	HP|	6100
-A51|	LP|	5000
-A52|	LP|	5900
-A53|	LP|	7300
-A54|	HP|	8900
-A55|	LP|	2800
-B01|	LP|	4500
-B02|	LP|	7400
-B03|	LP|	3400
-B04|	HP|	1400
-B05|	LP|	6100
-B06|	LP|	1900
-B07|	HP|	1600
-B08|	LP|	1600
-B09|	LP|	4400
-B10|	HP|	1700
-B11|	HP|	1100
-B12|	LP|	4900
-B13|	LP|	5900
-B14|	LP|	1900
-B15|	LP|	2300
-B16|	HP|	2300
-B17|	LP|	4400
-B18|	HP|	5900
-B19|	HP|	8900
-B20|	HP|	7400
-B21|	HP|	8800
-B22|	LP|	5300
-B23|	HP|	1100
-B24|	HP|	4900
-B25|	HP|	7300
-B26|	LP|	2800
-B27|	LP|	4400
-B28|	LP|	2000
-B29|	LP|	2300
-B30|	LP|	5000
-B31|	HP|	1500
-B32|	HP|	5100
-B33|	HP|	2300
-B34|	LP|	2300
-B35|	LP|	3400
-B36|	LP|	4900
-B37|	HP|	3400
-B38|	HP|	3300
-B39|	LP|	2400
-B40|	LP|	3300
-B41|	HP|	2300
-B42|	LP|	5100
-B43|	LP|	2700
-B44|	LP|	5000
-B45|	LP|	3400
-B46|	LP|	4800
-B47|	LP|	5900
-B48|	HP|	8700
-B49|	HP|	1100
-B50|	HP|	7300
-B51|	HP|	7300
-B52|	LP|	2100
-B53|	LP|	8800
-B54|	LP|	1400
-B55|	HP|	5900
-
-*HP: High-pass, LP: Low-pass*
+- [ ] Study the target plot and work out what kind of filter produces it. Read off the pass-band gain, how steeply the magnitude rolls off, the total change in phase from low to high frequency, and the corner frequency — and use these to decide what circuit you need and how many reactive elements it must contain.
+- [ ] Choose component values from the parts list so that your design's predicted magnitude and phase match the target, and verify the design in LT SPICE.
+- [ ] Build the filter, measure its magnitude and phase response between 1Hz and 100kHz, and plot your measurements against the target. Explain any differences.

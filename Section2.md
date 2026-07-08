@@ -72,13 +72,13 @@ The simplest useful model of a real component places this resistance in series w
 [![Non-ideal inductor and capacitor modelled as an ideal component in series with a resistance](graphics/LCeq.png)](graphics/LCeq.png)
 
 **Why this model is used.**
-The series-resistance model is popular because it is the simplest description that still captures how a real component actually behaves over the frequency range of this experiment (1Hz–100kHz):
+The series-resistance model is popular because it is the simplest description that still captures how a real component actually behaves over the frequency range of this experiment (1Hz–40kHz):
 
 - The series resistance is the *dominant* parasitic across this range. Other parasitics — an inductor's inter-winding capacitance, or a capacitor's lead inductance — only become important near self-resonance, which lies well above the frequencies you will measure, so they can be ignored here.
 - Because the resistance is in series, it simply adds to the reactance: $Z = R + jX$. The model therefore needs only *one* extra number, $R$, to describe the component's departure from ideal, which makes it easy both to analyse and to fit to measured data.
 - It reproduces the two features you actually observe in measurement: a flat resistive floor where the reactance becomes small, and a straight reactive line where the reactance dominates.
 
-### Impedance versus frequency
+### Characterising an inductor
 
 **Inductor.**
 With the series resistance the impedance is $Z_L = j\omega L + R$, so its magnitude is $|Z_L| = \sqrt{R^2 + (2\pi f L)^2}$.
@@ -90,15 +90,13 @@ The two regions meet at the corner frequency $f = R/(2\pi L)$:
 The dashed line is the ideal inductor ($|Z_L| = 2\pi f L$, a straight line of gradient $+1$); the solid line is the non-ideal model.
 Note how the two are indistinguishable at high frequency and separate only once the reactance falls below $R$.
 
-### Characterising an inductor
-
 Inductors tend to be less faithful to an ideal component than capacitors: at low frequency the parasitic resistance of the coil of wire becomes significant compared with the reactance, and at high frequency the capacitance between the tightly-packed turns of wire can cause further non-ideal behaviour.
 This makes careful measurement important.
 Measure the impedance with the potential-divider method and the math channel from earlier, choosing the test resistance $R$ so that both $v_\text{Z}$ and $v_\text{R}$ are easy to read (the same $R$-selection rules given for the capacitor below apply here).
 Update your graph with every data point as you take it, so you can see whether the points lie on a trend: if three points within a decade ( $\times10$ in frequency) fall on a straight line you can assume the characteristic is straight between them; if not, fill in extra measurements to find the shape of the curve.
 On logarithmic axes a small vertical deviation represents a large change, so don't dismiss anomalies as experimental error — check them.
 
-- [ ] Measure the impedance of **two different inductors** (for example 1mH and 100mH) at logarithmically-spaced frequencies between 1Hz and 100kHz, plot $|Z_L|$ against $f$ on logarithmic axes for each, and find the extent of frequencies over which each obeys the ideal equation $|Z_L|=2\pi f L$.
+- [ ] Measure the impedance of **two different inductors** (for example 1mH and 100mH) at logarithmically-spaced frequencies between 1Hz and 40kHz, plot $|Z_L|$ against $f$ on logarithmic axes for each, and find the extent of frequencies over which each obeys the ideal equation $|Z_L|=2\pi f L$.
 
 Discuss your results: identify the inductive (straight, gradient $+1$) region and the low-frequency resistive floor of each inductor; read $L$ from the gradient of the reactive region and $R$ from the height of the floor; and compare the two components — which stays closer to the ideal line over the measured range, and why?
 
@@ -136,7 +134,7 @@ You must choose a value of the test resistance $R$, and it affects the accuracy 
 
 These rules keep the magnitudes of $R$ and $Z$ close, which is where the measurement is most accurate; if they differ by many decimal places the reading becomes unreliable. If you are unsure, calculate the theoretical $|Z|$ and choose $R$ to be similar. The two captures of inaccurate math-channel measurements shown earlier tell you which way to change $R$ when a reading looks poor. Take measurements at the same logarithmically-spaced frequencies you used in the preparation task, and plot each point as you go.
 
-- [ ] Measure the impedance of **two different capacitors** (for example 1μF and 33nF) between 1Hz and 100kHz, plot $|Z_C|$ against $f$ on logarithmic axes for each, and confirm that they obey $|Z_C|=1/(2\pi f C)$ (a straight line of gradient $-1$).
+- [ ] Measure the impedance of **two different capacitors** (for example 1μF and 33nF) between 1Hz and 40kHz, plot $|Z_C|$ against $f$ on logarithmic axes for each, and confirm that they obey $|Z_C|=1/(2\pi f C)$ (a straight line of gradient $-1$).
 
 Discuss your results: identify the capacitive (straight, gradient $-1$) region for each capacitor; check whether the ESR floor is reached within the measurable range; extract $C$ from the reactive region; and compare the two capacitors with each other, and with the inductors you measured earlier.
 
@@ -174,13 +172,13 @@ The transfer function is $T = j\omega L_1/(R_1 + j\omega L_1)$, with the same co
 
 [![RL high-pass filter: resistor in series, output across the inductor](graphics/rl_highpass.png)](graphics/rl_highpass.png)
 
-With $R_1 = 1\text{k}\Omega$ and $L_1 = 1\text{mH}$ the corner frequency is $f_c = R_1/(2\pi L_1) \approx 159\text{kHz}$, which sits near the top of the measurable range, so take your highest-frequency points as high as the equipment allows in order to capture the transition.
+With $R_1 = 1\text{k}\Omega$ and $L_1 = 1\text{mH}$ the corner frequency is $f_c = R_1/(2\pi L_1) \approx 159\text{kHz}$, which lies well above the top of the measurement range, so within 10Hz–40kHz you will capture only the very start of the transition — take your highest-frequency points as high as the equipment allows.
 
 **Measuring the Bode plot.**
 A *Bode plot* shows both the magnitude and the phase of the transfer function against frequency. Measure it as follows:
 
 1. Drive the input with the signal generator set to a sine wave of fixed amplitude (for example 1V peak). Connect $V_\text{in}$ to oscilloscope CHA and $V_\text{out}$ to CHB, both referenced to the common ground.
-2. Step the frequency through logarithmically-spaced points (about 5–10 per decade) from 10Hz to 100kHz.
+2. Step the frequency through logarithmically-spaced points (about 5–10 per decade) from 10Hz to 40kHz.
 3. At each frequency read the amplitudes of $V_\text{in}$ and $V_\text{out}$ and calculate the magnitude $|T| = |V_\text{out}|/|V_\text{in}|$, converting to decibels with $20\log_{10}|T|$. Keep the generator amplitude constant as you change frequency.
 4. Measure the phase with the oscilloscope cursors: read the time shift $\Delta t$ between the zero-crossings of $V_\text{in}$ and $V_\text{out}$ and convert it with $\arg(T) = 360\,f\,\Delta t$ (an output that lags the input is a negative phase).
 5. Plot $|T|$ in dB against $f$, and $\arg(T)$ in degrees against $f$, both on a logarithmic frequency axis — this pair of graphs is the Bode plot.
@@ -209,13 +207,13 @@ Between these limits the response makes a first-order transition from the low-fr
 
 - [ ] Derive the transfer function of the circuit and confirm its low-frequency gain (0.5), its high-frequency gain floor (0.2) and its corner frequency.
 
-- [ ] Measure the transfer function with the signal generator driving the input, recording both the magnitude and the phase between 10Hz and 100kHz, and plot them as a Bode plot. Compare with your prediction.
+- [ ] Measure the transfer function with the signal generator driving the input, recording both the magnitude and the phase between 10Hz and 40kHz, and plot them as a Bode plot. Compare with your prediction.
 
 ### Challenge: recreate the gain floor with resistors and a capacitor
 
 The inductor in the gain-floor circuit above can be replaced by a capacitor to obtain a filter with an identical transfer function.
 
 - [ ] Design and build a filter that uses only resistors and a **capacitor** and has the **same transfer function** as the inductor gain-floor circuit above: a low-frequency gain of 0.5, a high-frequency gain floor of 0.2, and the same corner frequency.
-Measure its magnitude and phase response between 10Hz and 100kHz and overlay it on the response of the inductor circuit to confirm that the two match.
+Measure its magnitude and phase response between 10Hz and 40kHz and overlay it on the response of the inductor circuit to confirm that the two match.
 
 *Hint:* a capacitor's impedance falls with frequency — the opposite of an inductor — so to reproduce the same low-pass shelf the capacitor must be placed in a different arm of the divider from where the inductor sat. Work out where it has to go so that the divider ratio changes from 0.5 at low frequency to 0.2 at high frequency.
